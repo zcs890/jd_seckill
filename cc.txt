@@ -1,0 +1,55 @@
+方法一：手把手教程
+
+1、 打开电脑，网页登录jd账号（建议APP扫描），任意选择一个商品进入结算页
+
+2、建议用Chrome浏览器，F12打开浏览器的开发者模式，或者右击选择「检查」
+
+然后切换到「控制台Console」，在下面的 > 后面输入 _JdTdudfp（注意不是那个Filter方框）
+
+把输出的Json中eid和fp 拷贝出来放到config.ini文件 对应位置即可
+
+
+方法二：JavaScript代码
+
+还是在「控制台Console」的 > 后面输入JavaScript代码
+
+var eid = $('#eid').val();
+var fp = $('#fp').val();
+var trackId = getTakId();
+var riskControl = $('#riskControl').val();
+console.log(`eid = ${eid}\nfp = ${fp}\ntrack_id = ${trackId}\nrisk_control = ${riskControl}`);
+
+效果如图：
+
+
+方法三：自动的HTML脚本
+
+<html>
+    <head></head>
+    <body>
+        <div id="info">获取中……</div>
+        <hr>
+        <div id="eid"></div>
+        <div id="fp"></div>
+    </body>
+</html>
+
+<script src="https://gias.jd.com/js/td.js"></script>
+
+<script>
+    setTimeout(function () {
+        try {
+            getJdEid(function (eid, fp, udfp) {
+                document.getElementById('info').innerText = '请把下面的内容复制到配置文件 config.ini 中的对应位置';
+                document.getElementById('eid').innerText = 'eid = ' + eid;
+                document.getElementById('fp').innerText = 'fp = ' + fp;
+            });
+        } catch (e) {
+            document.getElementById('info').innerText = e;
+        }
+    }, 1000);
+</script>
+
+把这个复制到一个新建HTML文件中，然后Chrome浏览器打开即可看到输出的eid和fp。
+
+
